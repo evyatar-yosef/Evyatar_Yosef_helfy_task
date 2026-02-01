@@ -1,0 +1,45 @@
+.task-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-left: 6px solid #ccc;
+}
+
+.priority-high {
+  border-left-color: #ff4d4d;
+}
+
+.priority-medium {
+  border-left-color: #ffa500;
+}
+
+.priority-low {
+  border-left-color: #2ecc71;
+}
+
+.task-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.delete-btn {
+  background: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.status-btn {
+  background: #4a90e2;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+}
