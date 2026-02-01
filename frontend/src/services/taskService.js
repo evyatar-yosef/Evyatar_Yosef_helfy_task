@@ -17,7 +17,7 @@ const taskService = {
         return fetch(API_URL, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json' // set the content type to JSON
             },
             body: JSON.stringify(taskData)
         })
@@ -29,7 +29,7 @@ const taskService = {
             });
     },
 
-// PUT - update an existing task
+// PUT - update an existing task bt its unique id
     updateTask: function (id, updatedData) {
         return fetch(API_URL + '/' + id, {
             method: 'PUT',
@@ -51,8 +51,8 @@ const taskService = {
         return fetch(API_URL + '/' + id + '/toggle', {
             method: 'PATCH'
         })
-            .then(function (response) {
-                if (response.ok === false) {
+            .then(function (response) { 
+                if (response.ok === false) { 
                     throw new Error('Failed to toggle task');
                 }
                 return response.json();
@@ -64,8 +64,8 @@ const taskService = {
         return fetch(API_URL + '/' + id, {
             method: 'DELETE'
         })
-            .then(function (response) {
-                if (response.ok === false) {
+            .then(function (response) { 
+                if (response.ok === false) { // check if delete was successful
                     throw new Error('Failed to delete task');
                 }
                 return response.json();

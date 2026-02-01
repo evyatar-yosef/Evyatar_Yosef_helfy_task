@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
 import '../styles/Carousel.css';
 
+// Carousel component for displaying items in a carousel format
+
 function Carousel(props) {
+    // state for current index
     const [currentIndex, setCurrentIndex] = useState(0);
     const items = props.items;
 
     function handleNext() {
+        // if current index is less than the last index, increment current index
         if (currentIndex < items.length - 1) {
             setCurrentIndex(currentIndex + 1);
         } else {
@@ -14,6 +18,7 @@ function Carousel(props) {
     }
 
     function handlePrev() {
+        // if current index is greater than 0, decrement current index
         if (currentIndex > 0) {
             setCurrentIndex(currentIndex - 1);
         } else {
@@ -21,6 +26,7 @@ function Carousel(props) {
         }
     }
 
+    // if there are no items, return empty message
     if (!items || items.length === 0) {
         return props.emptyMessage || <p>No items to display.</p>;
     }
@@ -33,7 +39,7 @@ return (
                 <button type="button" onClick={handleNext} className="nav-btn">Next ❯</button>
             </div>
 
-            {/* ה-key גורם לאנימציית ה-fadeIn ב-CSS לפעול בכל מעבר משימה */}
+            {/* The key causes the fade in animation in the css to work on every task transition */}
             <div className="carousel-content" key={currentIndex}>
                 {props.renderItem(items[currentIndex])}
             </div>

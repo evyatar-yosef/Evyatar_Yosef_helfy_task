@@ -6,17 +6,18 @@ import taskService from './services/taskService';
 import './App.css';
 
 function App() {
-  const [tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useState([]); // simulate database
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [filterStatus, setFilterStatus] = useState('all');
-  const [taskToEdit, setTaskToEdit] = useState(null);
-  const formRef = useRef(null);
+  const [taskToEdit, setTaskToEdit] = useState(null); // When active, the form switches to edit mode with this task's data
+  const formRef = useRef(null); // target the form element for automatic scrolling
 
-  useEffect(function () {
+  useEffect(function () { // initial fetch
     fetchTasks();
   }, []);
 
+  // fetch tasks from server
   function fetchTasks() {
     setIsLoading(true);
     taskService.getAllTasks()
@@ -30,6 +31,7 @@ function App() {
       });
   }
 
+  // create new task
   function handleCreateTask(taskData) {
     taskService.createTask(taskData)
       .then(function (newTask) {
@@ -41,6 +43,8 @@ function App() {
         alert("Error: " + err.message);
       });
   }
+
+  // edit task
   function handleEditClick(task) {
     setTaskToEdit(task);
 
@@ -49,10 +53,13 @@ function App() {
       formRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   }
+
+  // Toggles the completed status of a specific task
   function handleToggleTask(id) {
     taskService.toggleTaskStatus(id)
       .then(function (updatedTask) {
         setTasks(function (prevTasks) {
+          // Mapping through tasks to replace only the updated item
           const newTasks = [];
           for (let i = 0; i < prevTasks.length; i++) {
             if (prevTasks[i].id === id) {
@@ -69,12 +76,14 @@ function App() {
       });
   }
 
+  // Delete task
   function handleDeleteTask(id) {
     const confirmDelete = window.confirm("Are you sure you want to delete this task?");
     if (confirmDelete === true) {
       taskService.deleteTask(id)
         .then(function () {
           setTasks(function (prevTasks) {
+            // Filtering out the deleted task to update the UI
             const filtered = [];
             for (let i = 0; i < prevTasks.length; i++) {
               if (prevTasks[i].id !== id) {
@@ -90,6 +99,7 @@ function App() {
     }
   }
 
+  // Submits updated task data and exits Edit Mode
   function handleUpdateTask(id, updatedData) {
     taskService.updateTask(id, updatedData)
       .then(function (updatedTask) {
@@ -111,7 +121,7 @@ function App() {
       });
   }
 
-  // filter tasks
+  // filter tasks based on the filterStatus
   const filteredTasks = tasks.filter(function (task) {
     if (filterStatus === 'completed') {
       return task.completed === true;
@@ -132,6 +142,7 @@ function App() {
         {error && <div className="error-message">{error}</div>}
 
         {/* edit or create task form */}
+        {/* The Ref here allows the handleEditClick function to find the Form's position */}
         <div ref={formRef}>
           <TaskForm
             onSubmit={taskToEdit ? handleUpdateTask : handleCreateTask}

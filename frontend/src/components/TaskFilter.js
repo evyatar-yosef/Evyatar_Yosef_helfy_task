@@ -1,9 +1,11 @@
 import React from 'react';
 import '../styles/TaskFilter.css';
 
+// TaskFilter component for filtering tasks by status
+
 function TaskFilter(props) {
-    const filterStatus = props.filterStatus;
-    const setFilterStatus = props.onFilterChange;
+    const filterStatus = props.filterStatus; // current filter status
+    const setFilterStatus = props.onFilterChange; // function to set filter status
 
     return (
         <div className="filter-container">
